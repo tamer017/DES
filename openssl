@@ -1,0 +1,4 @@
+openssl enc -des-ecb -K AABB09182736CCDD -in plaintext.txt | base64 > ciphertext_base64.txt
+base64 -d ciphertext_base64.txt | openssl enc -des-ecb -d -K AABB09182736CCDD -out plaintext_new.txt
+openssl enc -des-cbc -iv 1212121213131313 -K AABB09182736CCDD -in plaintext.txt | base64 > ciphertext_base64.txt
+base64 -d ciphertext_base64.txt | openssl enc -des-cbc -d -iv 1212121213131313 -K AABB09182736CCDD -out plaintext_new.txt
