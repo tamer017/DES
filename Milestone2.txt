@@ -1,1 +1,8 @@
 
+openssl genpkey -algorithm RSA -out private_key.pem
+
+openssl rsa -pubout -in private_key.pem -out public_key.pem
+
+openssl rsautl -encrypt -pubin -inkey public_key.pem -in plaintext.txt -out encrypted_data.txt
+
+openssl rsautl -decrypt -inkey private_key.pem -in encrypted_data.txt -out decrypted_data.txt
