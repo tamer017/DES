@@ -206,10 +206,5 @@ We conducted several experiments to test different approaches and modifications.
 | Focal Loss               | Accuracy               | 53%        |
 
 
-## References
-
-- BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (https://arxiv.org/abs/1810.04805)
-- Stanford Sentiment Treebank (SST): https://nlp.stanford.edu/sentiment/index.html
-- SMART + Mnrl: Methods for improving robustness and ranking accuracy in STS tasks.
 
 
