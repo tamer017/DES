@@ -32,6 +32,12 @@ We conducted several experiments to test different approaches and modifications.
 | **Experiment 5**                | Autoencoder Backbone               | SST                | Accuracy               | 18.3%      |
 | **Experiment 6**                | Focal Loss                         | SST                | Accuracy               | 53%        |
 
+Our model (Experment 6 with focal loss) preformance over 10 epochs 
+![image](https://github.com/user-attachments/assets/49227cf1-eb2f-49cc-8c18-3d177d130ea2)
+and here are the state of the art models one SST-5 data set **Link**[Referance](https://paperswithcode.com/sota/sentiment-analysis-on-sst-5-fine-grained)
+![image](https://github.com/user-attachments/assets/8a2b2056-a47f-4780-8c81-1047e90adbb2)
+
+
 
 1. **Experiment 1: Fine-Tuning BERT with New Datasets**
    - **Description**: This experiment involved fine-tuning the BERT model using three datasets:
