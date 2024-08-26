@@ -63,6 +63,17 @@ We conducted several experiments to test different approaches and modifications.
 | IMDB/SST            | 17,500               | Accuracy               | 93.8%/52.6%      |
 | Tweets/SST          | 3,521                | Accuracy               | 61.6%/52.6%      |
 
+```bash
+   # For IMDB Dataset
+   git checkout sentiment-imdb-binary
+   python train.py --dataset imdb --epochs 3 --batch_size 16
+
+   # For Tweets Dataset
+   git checkout sentiment-tweets
+   python train.py --dataset tweets --epochs 3 --batch_size 16
+   ```
+
+
 
 2. **Experiment 2: Multi-Task Fine-Tuning with Sentiment Analysis and Semantic Similarity**
    - **Description**: This experiment involved fine-tuning the BERT model to perform two distinct tasks simultaneously:
