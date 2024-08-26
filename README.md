@@ -99,7 +99,8 @@ We conducted several experiments to test different approaches and modifications.
      - **STS Dataset**: Achieved a Pearson’s correlation of 0.812 on the STS development set.
    - **Branch**: [sentiment-semantic](https://github.com/thisHermit/nlp_project/tree/sentiment-semantic)
   
-   ![autoencoder_diagram](https://github.com/user-attachments/assets/5692286b-834e-439f-8421-79841d269457)
+   ![autoencoder_diagram (1)](https://github.com/user-attachments/assets/cc651b32-ea35-47e4-ade3-a7b12d48f33f)
+
 
 | **Task**                  | **Dataset**      | **Evaluation Metric** | **Result** |
 |---------------------------|------------------|-----------------------|------------|
