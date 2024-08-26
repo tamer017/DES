@@ -42,6 +42,7 @@
      - **IMDB Dataset**: Achieved 93.8% accuracy on the IMDB development set.
      - **Tweets Dataset**: Achieved 61.6% accuracy on the Tweets development set.
      - **SST Dataset**: Achieved 52.6% accuracy on the SST development set.
+       
 | **Dataset**      | **Training Samples** | **Evaluation Metric** | **Result** |
 |------------------|----------------------|-----------------------|------------|
 | IMDB/SST         | 17,500               | Accuracy              | 93.8%/52.6%|
