@@ -1,9 +1,25 @@
-# DES
+# Sentiment Analysis with BERT on the SST Dataset
 
 
+This part focuses on sentiment analysis using the BERT model on the Stanford Sentiment Treebank (SST) dataset. Sentiment analysis is a fundamental task in Natural Language Processing (NLP) that involves determining the sentiment expressed in a text. The SST dataset is a widely-used benchmark that provides labeled sentences with sentiment scores across different classes.
 
+Our primary objective is to enhance the performance of BERT-based sentiment classification beyond the current baseline by exploring various techniques and modifications.
+
+The goal of this section is to improve the baseline accuracy of 52.2% achieved by a BERT model on the SST dataset. To achieve this, we explored various techniques such as advanced regularization methods, different loss functions, and architectural modifications. Our aim is to develop a more robust and accurate sentiment classification model that better understands and predicts sentiments expressed in text.
+
+### Key Takeaways
+
+- **BERT Fine-Tuned**: Demonstrated high accuracy on the IMDB dataset but maintained baseline accuracy on SST and the Tweets dataset.
+- **Multi-Task Fine-Tuning (SMART + Mnrl)**: Improved performance on the STS dataset but did not enhance SST accuracy.
+- **Residual MLP (RIMLP)**: Performance was on par with the baseline.
+- **L2 Regularization**: Provided the best improvement in SST accuracy.
+- **Autoencoder Backbone**: Resulted in a significant drop in performance.
+- **Focal Loss**: Provided a slight improvement in SST accuracy.
+
+## Experiments
 
 ### **Comparison of Best Models Across Experiments on development sets**
+We conducted several experiments to test different approaches and modifications. Below is a summary of these experiments:
 
 | **Experiment**                  | **Best Model/Technique**           | **Dataset/Task**   | **Evaluation Metric** | **Result** |
 |---------------------------------|------------------------------------|--------------------|-----------------------|------------|
@@ -16,7 +32,6 @@
 | **Experiment 5**                | Autoencoder Backbone               | SST                | Accuracy               | 18.3%      |
 | **Experiment 6**                | Focal Loss                         | SST                | Accuracy               | 53%        |
 
-## Experiments
 
 1. **Experiment 1: Fine-Tuning BERT with New Datasets**
    - **Description**: This experiment involved fine-tuning the BERT model using three datasets:
@@ -42,11 +57,10 @@
      - **IMDB Dataset**: Achieved 93.8% accuracy on the IMDB development set.
      - **Tweets Dataset**: Achieved 61.6% accuracy on the Tweets development set.
      - **SST Dataset**: Achieved 52.6% accuracy on the SST development set.
-       
 | **Dataset**      | **Training Samples** | **Evaluation Metric** | **Result** |
 |------------------|----------------------|-----------------------|------------|
-| IMDB/SST         | 17,500               | Accuracy              | 93.8%/52.6%|
-| Tweets/SST       | 3,521                | Accuracy              | 61.6%/52.6%|
+| IMDB/SST            | 17,500               | Accuracy               | 93.8%/52.6%      |
+| Tweets/SST          | 3,521                | Accuracy               | 61.6%/52.6%      |
 
 
 2. **Experiment 2: Multi-Task Fine-Tuning with Sentiment Analysis and Semantic Similarity**
@@ -191,35 +205,10 @@
 | Focal Loss               | Accuracy               | 53%        |
 
 
+## References
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (https://arxiv.org/abs/1810.04805)
+- Stanford Sentiment Treebank (SST): https://nlp.stanford.edu/sentiment/index.html
+- SMART + Mnrl: Methods for improving robustness and ranking accuracy in STS tasks.
 
 
