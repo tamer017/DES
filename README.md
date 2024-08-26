@@ -44,8 +44,8 @@
      - **SST Dataset**: Achieved 52.6% accuracy on the SST development set.
 | **Dataset**      | **Training Samples** | **Evaluation Metric** | **Result** |
 |------------------|----------------------|-----------------------|------------|
-| IMDB/SST            | 17,500               | Accuracy               | 93.8%/52.6%      |
-| Tweets/SST          | 3,521                | Accuracy               | 61.6%/52.6%      |
+| IMDB/SST         | 17,500               | Accuracy              | 93.8%/52.6%|
+| Tweets/SST       | 3,521                | Accuracy              | 61.6%/52.6%|
 
 
 2. **Experiment 2: Multi-Task Fine-Tuning with Sentiment Analysis and Semantic Similarity**
