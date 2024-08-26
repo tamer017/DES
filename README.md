@@ -70,12 +70,14 @@ We conducted several experiments to test different approaches and modifications.
 
    # load IMDB Dataset
    python load_tweets_data.py
-
-   ./run_train.py
    ```
-   after editing the **run_train.py** 
+   edit **run_train.py** 
 ```bash
    python -u multitask_classifier.py --use_gpu --epochs 15 --local_files_only --option finetune --task multi-sentiment --hidden_dropout_prob 0.1 --lr 1e-5 --batch_size 64
+   ```
+   run **run_train.py**
+   ```bash
+      ./run_train.py
    ```
 
 
@@ -108,12 +110,17 @@ change the following constants in **multitask_calssifier.py**
    AUTOENCODER = True # to use the AOE
    AOE = False # to train the AOE
    ```
-   after editing the **run_train.py** 
+
+   edit **run_train.py** 
 ```bash
    # at auto-encoder training
    python -u multitask_classifier.py --use_gpu --epochs 10 --local_files_only --option pretrain --task sst --hidden_dropout_prob 0.1 --lr 1e-5 --batch_size 64
    # at classification
    python -u multitask_classifier.py --use_gpu --epochs 10 --local_files_only --option finetune --task sst --hidden_dropout_prob 0.1 --lr 1e-5 --batch_size 64
+   ```
+   run **run_train.py**
+   ```bash
+      ./run_train.py
    ```
 
 3. **Experiment 3: Changing the Classification Head**
@@ -234,6 +241,13 @@ change the following constants in **multitask_calssifier.py**
 | Dice Loss                | Accuracy               | 46.6%      |
 | Focal Loss               | Accuracy               | 53%        |
 
-
+# HOW TO RUN The Best Model
+   edit **run_train.py** 
+```bash
+   python -u multitask_classifier.py --use_gpu --epochs 10 --local_files_only --option finetune --task sst --hidden_dropout_prob 0.1 --lr 1e-5 --batch_size 64
+   ```
+   run **run_train.py**
+   ```bash
+      ./run_train.py
 
 
