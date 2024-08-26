@@ -63,14 +63,19 @@ We conducted several experiments to test different approaches and modifications.
 | IMDB/SST            | 17,500               | Accuracy               | 93.8%/52.6%      |
 | Tweets/SST          | 3,521                | Accuracy               | 61.6%/52.6%      |
 
+#### How to run
 ```bash
-   # For IMDB Dataset
-   git checkout sentiment-imdb-binary
-   python train.py --dataset imdb --epochs 3 --batch_size 16
+   # load IMDB Dataset
+   python load_binary_data.py
 
-   # For Tweets Dataset
-   git checkout sentiment-tweets
-   python train.py --dataset tweets --epochs 3 --batch_size 16
+   # load IMDB Dataset
+   python load_tweets_data.py
+
+   ./run_train.py
+   ```
+   after editing the **run_train.py** 
+```bash
+   python -u multitask_classifier.py --use_gpu --epochs 15 --local_files_only --option finetune --task multi-sentiment --hidden_dropout_prob 0.1 --lr 1e-5 --batch_size 64
    ```
 
 
