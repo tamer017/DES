@@ -102,6 +102,19 @@ We conducted several experiments to test different approaches and modifications.
 | Sentiment Analysis        | SST              | Accuracy               | 51%        |
 | Semantic Textual Similarity (STS) | STS              | Pearson’s Correlation | 0.812      |
 
+#### How to run
+change the following constants in **multitask_calssifier.py**
+```bash
+   AUTOENCODER = True # to use the AOE
+   AOE = False # to train the AOE
+   ```
+   after editing the **run_train.py** 
+```bash
+   # at auto-encoder training
+   python -u multitask_classifier.py --use_gpu --epochs 10 --local_files_only --option pretrain --task sst --hidden_dropout_prob 0.1 --lr 1e-5 --batch_size 64
+   # at classification
+   python -u multitask_classifier.py --use_gpu --epochs 10 --local_files_only --option finetune --task sst --hidden_dropout_prob 0.1 --lr 1e-5 --batch_size 64
+   ```
 
 3. **Experiment 3: Changing the Classification Head**
    - **Description**: This experiment explored a more complex classification head by integrating residual connections and a multi-layer perceptron with a bidirectional LSTM (bLSTM):
