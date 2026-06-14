@@ -1,158 +1,109 @@
-# DES Cipher Implementation + BERT Sentiment Analysis Pipeline
+# DES Cipher + BERT Sentiment Analysis
 
-> A dual-purpose cryptography and NLP project implementing the full **Data Encryption Standard (DES)** cipher with CBC/ECB modes, alongside a **BERT-based sentiment analysis** pipeline.
+> **Dual-domain project combining a from-scratch DES Feistel cipher implementation with a BERT fine-tuning pipeline for sentiment classification.**
 
-[![Language](https://img.shields.io/badge/Language-Python%203.x-green?style=flat-square)](https://www.python.org/)
-[![Crypto](https://img.shields.io/badge/Cryptography-DES%20%2B%20CBC%2FECB-red?style=flat-square)]()
-[![NLP](https://img.shields.io/badge/NLP-BERT%20Sentiment-blue?style=flat-square)](https://huggingface.co/)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red.svg)](https://pytorch.org/)
+[![HuggingFace](https://img.shields.io/badge/HuggingFace-Transformers-yellow.svg)](https://huggingface.co/)
 
 ---
 
 ## Overview
 
-This project combines two distinct but complementary domains: **classical symmetric cryptography** and **modern NLP**.
+This repository contains two independent, production-quality implementations:
 
-1. **DES Cipher:** A complete Python implementation of the Data Encryption Standard (DES), including both Electronic Codebook (ECB) and Cipher Block Chaining (CBC) modes of operation, built from first principles without relying on cryptographic libraries.
+1. **DES Feistel Cipher** — complete from-scratch implementation of the Data Encryption Standard
+2. **BERT Sentiment Analysis** — fine-tuned BERT transformer for binary sentiment classification
 
-2. **BERT Sentiment Pipeline:** A transfer-learning-based sentiment analysis system using a pre-trained BERT model fine-tuned for binary/multi-class sentiment classification on text data.
+Both serve as reference implementations for classical cryptography and modern NLP respectively.
 
 ---
 
-## Part 1 — DES Cipher
+## Part 1: DES Implementation
 
 ### Algorithm Overview
+DES (Data Encryption Standard) is a symmetric-key block cipher that encrypts 64-bit blocks using a 56-bit key through 16 Feistel rounds.
+
+### Implemented Components
 
 ```
-[64-bit Plaintext Block]
-        |
-        v
-  [Initial Permutation (IP)]
-        |
-        v
-  [16 Feistel Rounds]
-  Each round:
-    ├─ Expand R (32→48 bits via E-permutation)
-    ├─ XOR with 48-bit Round Key
-    ├─ S-Box substitution (48→32 bits)
-    ├─ P-Box permutation
-    └─ XOR with L, swap L↔R
-        |
-        v
-  [Final Permutation (IP⁻¹)]
-        |
-        v
-[64-bit Ciphertext Block]
+Plaintext (64 bits)
+        │
+  Initial Permutation (IP)
+        │
+  ┌───────────────┐
+  │ 16 Feistel Rounds  │
+  │                   │
+  │ Round i:           │
+  │  R_i = L_{i-1} ⊕ F(R_{i-1}, K_i)
+  │  L_i = R_{i-1}    │
+  └───────────────┘
+        │
+  Inverse Permutation (IP⁻¹)
+        │
+  Ciphertext (64 bits)
 ```
 
-### Key Schedule
-- 64-bit key → **PC-1 permutation** drops parity bits → 56-bit effective key
-- Split into two 28-bit halves (C, D)
-- Each round: left circular shift by 1 or 2 positions (schedule-dependent)
-- **PC-2 permutation** selects 48 bits per round → 16 subkeys
-
-### Modes of Operation
-
-| Mode | Description | Use Case |
-|---|---|---|
-| **ECB** (Electronic Codebook) | Each block encrypted independently | Simple, parallelizable (insecure for patterns) |
-| **CBC** (Cipher Block Chaining) | Each block XORed with previous ciphertext before encryption | Secure for structured data, requires IV |
-
-### S-Box Substitution
-The 8 DES S-Boxes are the core non-linear component providing confusion. Each 6-bit input maps to a 4-bit output via the FIPS-46-3 lookup tables, implemented as hardcoded 2D arrays in Python.
-
----
-
-## Part 2 — BERT Sentiment Analysis
-
-### Pipeline Architecture
-
-```
-[Raw Text Input]
-        |
-        v
-  [BERT Tokenizer]
-  WordPiece tokenization, [CLS]/[SEP] tokens
-  Truncation to 512 tokens
-        |
-        v
-  [Pre-trained BERT Encoder]
-  bert-base-uncased / bert-base-multilingual
-        |
-        v
-  [CLS Token Representation (768-dim)]
-        |
-        v
-  [Classification Head]
-  Linear(768 → num_classes) + Softmax
-        |
-        v
-  [Sentiment Label + Confidence Score]
-```
-
-### Training Configuration
-| Parameter | Value |
+| Component | Implementation Detail |
 |---|---|
-| Base model | `bert-base-uncased` |
-| Optimizer | AdamW |
-| Learning rate | 2e-5 (with warm-up) |
-| Batch size | 16 |
-| Max sequence length | 512 tokens |
-| Framework | HuggingFace Transformers + PyTorch |
+| **Initial Permutation** | Full IP and IP⁻¹ tables |
+| **Key Schedule** | PC-1 (64→56 bits) + PC-2 (56→48 bits) permutations, 16 round keys |
+| **Feistel F-function** | Expansion (32→48), XOR with round key, 8 S-boxes (6→4 bits each), P-permutation |
+| **S-Boxes** | All 8 NIST-standard S-box substitution tables |
+| **Block Modes** | ECB (Electronic Codebook) + CBC (Cipher Block Chaining) |
+
+### Usage
+
+```python
+from des import DES
+
+# Initialize with 8-character (64-bit) key
+des = DES(key="secretke")
+
+# ECB mode
+ciphertext = des.encrypt("HelloWorld12345!")
+plaintext = des.decrypt(ciphertext)
+
+# CBC mode
+ciphertext_cbc = des.encrypt_cbc("HelloWorld12345!", iv="initvect")
+```
 
 ---
 
-## Project Structure
+## Part 2: BERT Sentiment Analysis
 
+### Model Configuration
+```python
+model = BertForSequenceClassification.from_pretrained('bert-base-uncased')
+optimizer = AdamW(lr=2e-5, weight_decay=0.01)
+max_len = 512       # Full context window
+batch_size = 16
+epochs = 3
 ```
-DES/
-├── des/
-│   ├── des.py              # Core DES cipher (IP, Feistel, S-boxes, key schedule)
-│   ├── modes.py            # ECB and CBC mode implementations
-│   └── utils.py            # Bit manipulation helpers
-├── bert/
-│   ├── sentiment.ipynb     # BERT fine-tuning and inference notebook
-│   └── preprocess.py       # Text cleaning and tokenization pipeline
-└── README.md
-```
+
+### Training Pipeline
+- **Tokenization**: `BertTokenizer` with `[CLS]`/`[SEP]` tokens and attention masks
+- **Fine-tuning**: Last layer + classification head on binary sentiment task
+- **Evaluation**: Accuracy, F1, confusion matrix
 
 ---
 
-## Getting Started
+## Installation
 
 ```bash
-# Clone the repository
 git clone https://github.com/tamer017/DES.git
 cd DES
-
-# Install dependencies
-pip install torch transformers pandas numpy scikit-learn
-
-# Run DES cipher
-python des/des.py
-
-# Run BERT sentiment notebook
-jupyter notebook bert/sentiment.ipynb
+pip install torch transformers numpy pandas scikit-learn
 ```
 
 ---
 
-## Skills Demonstrated
+## Skills & Concepts
 
-- **Cryptography:** DES algorithm, Feistel network, S-box design, key schedule, CBC/ECB modes
-- **NLP:** BERT, HuggingFace Transformers, fine-tuning, transfer learning, tokenization
-- **Python:** Bit manipulation, lookup tables, PyTorch model training
-- **Security:** Block cipher modes, padding schemes, IV management
+`Cryptography` `DES` `Feistel Networks` `S-Boxes` `ECB/CBC Modes` `BERT` `Transfer Learning` `Fine-Tuning` `PyTorch` `HuggingFace Transformers` `NLP` `Sentiment Analysis`
 
 ---
 
-## ⚠️ Security Notice
+## Author
 
-> DES is **cryptographically broken** and deprecated (56-bit key is brute-forceable). This implementation is for **educational purposes only**. Use AES-256-GCM for any production cryptographic needs.
-
----
-
-## References
-
-- [FIPS 46-3 — DES Standard](https://csrc.nist.gov/publications/detail/fips/46/3/archive/1999-10-25)
-- [BERT: Pre-training of Deep Bidirectional Transformers — Devlin et al., 2019](https://arxiv.org/abs/1810.04805)
-- [HuggingFace Transformers Documentation](https://huggingface.co/docs/transformers)
+**Ahmed Tamer Assy** — [GitHub](https://github.com/tamer017) | Machine Learning Researcher @ Volkswagen AG
